@@ -1,0 +1,138 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile for dating and social connection",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "phoneNumber": { "type": "string" },
+        "age": { "type": "number" },
+        "gender": { "type": "string" },
+        "division": { "type": "string" },
+        "district": { "type": "string" },
+        "city": { "type": "string" },
+        "education": { "type": "string" },
+        "profession": { "type": "string" },
+        "relationshipStatus": { "type": "string" },
+        "interests": { "type": "array" },
+        "hobbies": { "type": "array" },
+        "bio": { "type": "string" },
+        "partnerPreferences": { "type": "string" },
+        "profilePhotoUrl": { "type": "string" },
+        "photos": { "type": "array" },
+        "isVerified": { "type": "boolean" },
+        "isBanned": { "type": "boolean" },
+        "isHidden": { "type": "boolean" },
+        "isPremium": { "type": "boolean" },
+        "role": { "type": "string" },
+        "lastActiveAt": { "type": "number" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["uid", "fullName", "age", "gender"]
+    },
+    "Like": {
+      "title": "Like",
+      "description": "Like sent from one user to another",
+      "type": "object",
+      "properties": {
+        "fromUserId": { "type": "string" },
+        "toUserId": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "isMatch": { "type": "boolean" }
+      },
+      "required": ["fromUserId", "toUserId", "createdAt"]
+    },
+    "Match": {
+      "title": "Match",
+      "description": "Mutual match between two users",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "users": { "type": "array" },
+        "user1Id": { "type": "string" },
+        "user2Id": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "lastMessage": { "type": "string" },
+        "lastMessageSenderId": { "type": "string" },
+        "lastMessageTimestamp": { "type": "number" }
+      },
+      "required": ["users", "createdAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Direct message in a match",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "matchId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "receiverId": { "type": "string" },
+        "text": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "timestamp": { "type": "number" },
+        "read": { "type": "boolean" }
+      },
+      "required": ["matchId", "senderId", "receiverId", "timestamp"]
+    },
+    "Report": {
+      "title": "Report",
+      "description": "Account report submitted for moderation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "reporterId": { "type": "string" },
+        "reportedUserId": { "type": "string" },
+        "reason": { "type": "string" },
+        "details": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["reporterId", "reportedUserId", "reason", "createdAt"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "User notification",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "type": { "type": "string" },
+        "title": { "type": "string" },
+        "body": { "type": "string" },
+        "fromUserId": { "type": "string" },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["userId", "type", "title", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/likes/{likeId}": {
+      "schema": "Like",
+      "description": "Profile likes"
+    },
+    "/matches/{matchId}": {
+      "schema": "Match",
+      "description": "Matched pairs"
+    },
+    "/matches/{matchId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Chat messages between matched users"
+    },
+    "/reports/{reportId}": {
+      "schema": "Report",
+      "description": "Safety reports"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "User notifications"
+    }
+  }
+}
